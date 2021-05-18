@@ -15,6 +15,10 @@ public class Store {
 
     private int zip;
 
+    private String name;
+
+    private String address;
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -29,5 +33,21 @@ public class Store {
 
     public void setZip(int zip) {
         this.zip = zip;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
