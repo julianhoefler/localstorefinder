@@ -5,7 +5,7 @@ Aktuelle Version: 1.0.0
 Um die Backend-Abhängigkeiten zu verringern, stellen wir 3 Dockerimages bereit.
 
 1. Anwendung auschecken
-2. Branch zu **dev** wechseln
+2. (falls nötig) Branch zu **master** wechseln
 3. Maven **clean install** durchführen
 4. folgenden Befehl unter dem Ordner/backend ausführen:
    ``docker-compose up --build``
