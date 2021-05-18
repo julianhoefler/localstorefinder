@@ -18,14 +18,15 @@ public class StoreController {
     public String createStore(@RequestBody StoreInputModel storeInputModel) {
         String uuid = UUID.randomUUID().toString();
 
-        Store store = new Store(
-                uuid,
-                storeInputModel.getZip(),
-                storeInputModel.getName(),
-                storeInputModel.getAddress());
+        Store store = Store.builder()
+                .id(uuid)
+                .zip(storeInputModel.getZip())
+                .name(storeInputModel.getName())
+                .address(storeInputModel.getAddress())
+                .build();
 
         storeRepository.save(store);
-        return "Successful";
+        return "Successfully added to database.";
     }
 
     @GetMapping("/stores")
