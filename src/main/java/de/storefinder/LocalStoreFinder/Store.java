@@ -1,22 +1,17 @@
 package de.storefinder.LocalStoreFinder;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-@Getter
-@Setter
+@Data
+@Builder
+@AllArgsConstructor
 public class Store {
-
-    public Store(String id, int zip, String name, String address) {
-        this.id = id;
-        this.zip = zip;
-        this.name = name;
-        this.address = address;
-    }
 
     public Store() {
     }

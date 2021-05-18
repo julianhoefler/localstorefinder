@@ -1,10 +1,8 @@
 package de.storefinder.LocalStoreFinder;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class StoreInputModel {
 
     private int zip;
