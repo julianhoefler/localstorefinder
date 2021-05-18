@@ -1,0 +1,38 @@
+version: '3.1'
+services:
+  db:
+    image: bitnami/mysql
+    restart: always
+    volumes:
+      - './mysql_master_data:/bitnami/mysql/data'
+    ports:
+    - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: notSecureChangeMe
+      MYSQL_USER: localstorefinder
+      MYSQL_PASSWORD: SE5AO9blesy8I2f1
+      MYSQL_DATABASE: localstorefinder
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 1234:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=db
+
+  application:
+    depends_on:
+      db:
+        condition: service_healthy
+    build: .
+    ports:
+    - 8080:8080
+    environment:
+      DB_HOST_NAME: db
+      SERVER_PORT: 8080
