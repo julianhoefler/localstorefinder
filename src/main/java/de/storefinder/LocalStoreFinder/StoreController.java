@@ -18,11 +18,11 @@ public class StoreController {
     public String createStore(@RequestBody StoreInputModel storeInputModel) {
         String uuid = UUID.randomUUID().toString();
 
-        Store store = new Store();
-        store.setId(uuid);
-        store.setAddress(storeInputModel.getAddress());
-        store.setName(storeInputModel.getName());
-        store.setZip(storeInputModel.getZip());
+        Store store = new Store(
+                uuid,
+                storeInputModel.getZip(),
+                storeInputModel.getName(),
+                storeInputModel.getAddress());
 
         storeRepository.save(store);
         return "Successful";
