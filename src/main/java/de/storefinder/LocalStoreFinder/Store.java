@@ -11,6 +11,16 @@ import javax.persistence.Id;
 @Setter
 public class Store {
 
+    public Store(String id, int zip, String name, String address) {
+        this.id = id;
+        this.zip = zip;
+        this.name = name;
+        this.address = address;
+    }
+
+    public Store() {
+    }
+
     @Id
     private String id;
 
