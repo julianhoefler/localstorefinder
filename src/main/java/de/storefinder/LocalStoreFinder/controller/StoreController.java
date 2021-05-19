@@ -1,5 +1,8 @@
-package de.storefinder.LocalStoreFinder;
+package de.storefinder.LocalStoreFinder.controller;
 
+import de.storefinder.LocalStoreFinder.models.entities.Store;
+import de.storefinder.LocalStoreFinder.models.requests.StoreInputModel;
+import de.storefinder.LocalStoreFinder.repositories.StoreRepository;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

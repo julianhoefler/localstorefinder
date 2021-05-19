@@ -1,4 +1,4 @@
-package de.storefinder.LocalStoreFinder;
+package de.storefinder.LocalStoreFinder.models.requests;
 
 import lombok.Data;
 
