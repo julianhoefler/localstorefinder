@@ -1,4 +1,4 @@
-package de.storefinder.LocalStoreFinder;
+package de.storefinder.LocalStoreFinder.models.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
