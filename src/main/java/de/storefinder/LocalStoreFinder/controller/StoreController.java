@@ -6,7 +6,6 @@ import de.storefinder.LocalStoreFinder.mapper.OpeningTimesMapper;
 import de.storefinder.LocalStoreFinder.mapper.PaymentMapper;
 import de.storefinder.LocalStoreFinder.models.entities.*;
 import de.storefinder.LocalStoreFinder.models.requests.StoreInputModel;
-import de.storefinder.LocalStoreFinder.models.responses.OpeningTimeOutputModel;
 import de.storefinder.LocalStoreFinder.models.responses.OpeningTimesOutputModel;
 import de.storefinder.LocalStoreFinder.models.responses.StoreOutputModel;
 import de.storefinder.LocalStoreFinder.repositories.*;
@@ -14,10 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -128,5 +124,13 @@ public class StoreController {
             }
         }
         return new ResponseEntity<>(outputStores, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/stores")
+    @ApiResponse(responseCode = "200", description = "Erstellt einen Store mit zufälliger UUID")
+    @ApiResponse(responseCode = "400", description = "Die eingegebenen Parameter stimmen nicht")
+    public ResponseEntity deleteById(@RequestParam String uuid) {
+        storeRepository.deleteById(uuid);
+        return new ResponseEntity<>("Deleted store Successfully", HttpStatus.OK);
     }
 }
