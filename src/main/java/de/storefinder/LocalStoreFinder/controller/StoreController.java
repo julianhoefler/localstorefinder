@@ -28,7 +28,6 @@ public class StoreController {
 
         Store store = Store.builder()
                 .id(uuid)
-                .zip(storeInputModel.getZip())
                 .name(storeInputModel.getName())
                 .address(storeInputModel.getAddress())
                 .build();

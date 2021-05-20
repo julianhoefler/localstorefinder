@@ -11,24 +11,17 @@ import javax.persistence.Id;
 @Data
 @Builder
 @AllArgsConstructor
-public class Store {
+public class Payment {
 
-    public Store() {
+    public Payment() {
     }
 
     @Id
     private String id;
 
-    private String name;
+    private boolean cash;
 
-    private String address;
+    private boolean creditcard;
 
-    private String preImage;
-
-    private String description;
-
-    private String openingTimes;
-
-    private String payment;
-
+    private boolean payback;
 }

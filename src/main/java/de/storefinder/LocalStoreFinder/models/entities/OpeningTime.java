@@ -6,29 +6,23 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Timestamp;
 
-@Entity
 @Data
 @Builder
 @AllArgsConstructor
-public class Store {
+@Entity
+public class OpeningTime {
 
-    public Store() {
+    public OpeningTime() {
     }
 
     @Id
     private String id;
 
-    private String name;
+    private boolean isOpen;
 
-    private String address;
+    private Timestamp openingTime;
 
-    private String preImage;
-
-    private String description;
-
-    private String openingTimes;
-
-    private String payment;
-
+    private Timestamp closingTime;
 }

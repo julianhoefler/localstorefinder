@@ -11,24 +11,15 @@ import javax.persistence.Id;
 @Data
 @Builder
 @AllArgsConstructor
-public class Store {
+public class StoreCategory {
 
-    public Store() {
+    public StoreCategory() {
     }
 
     @Id
     private String id;
 
-    private String name;
+    private String storeId;
 
-    private String address;
-
-    private String preImage;
-
-    private String description;
-
-    private String openingTimes;
-
-    private String payment;
-
+    private String categoryId;
 }

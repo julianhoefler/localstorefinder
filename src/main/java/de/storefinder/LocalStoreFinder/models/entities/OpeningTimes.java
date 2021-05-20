@@ -11,24 +11,27 @@ import javax.persistence.Id;
 @Data
 @Builder
 @AllArgsConstructor
-public class Store {
+public class OpeningTimes {
 
-    public Store() {
+    public OpeningTimes() {
     }
 
     @Id
     private String id;
 
-    private String name;
+    private String monday;
 
-    private String address;
+    private String tuesday;
 
-    private String preImage;
+    private String wednesday;
 
-    private String description;
+    private String thursday;
 
-    private String openingTimes;
+    private String friday;
 
-    private String payment;
+    private String saturday;
+
+    private String sunday;
+
 
 }
