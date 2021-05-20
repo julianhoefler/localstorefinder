@@ -6,7 +6,10 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -22,7 +25,7 @@ public class OpeningTime {
 
     private boolean isOpen;
 
-    private Timestamp openingTime;
+    private Time openingTime;
 
-    private Timestamp closingTime;
+    private Time closingTime;
 }
