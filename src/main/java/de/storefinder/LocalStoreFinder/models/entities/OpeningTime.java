@@ -4,12 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Builder
@@ -25,7 +21,11 @@ public class OpeningTime {
 
     private boolean isOpen;
 
-    private Time openingTime;
+    @Basic
+    @Temporal(TemporalType.TIME)
+    private Date openingTime;
 
-    private Time closingTime;
+    @Basic
+    @Temporal(TemporalType.TIME)
+    private Date closingTime;
 }
