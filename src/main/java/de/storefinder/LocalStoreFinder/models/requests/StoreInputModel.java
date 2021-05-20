@@ -5,9 +5,15 @@ import lombok.Data;
 @Data
 public class StoreInputModel {
 
-    private int zip;
-
     private String name;
 
-    private String address;
+    private AddressInputModel address;
+
+    private String preImage;
+
+    private String description;
+
+    private OpeningTimesInputModel openingTimes;
+
+    private PaymentInputModel payment;
 }
