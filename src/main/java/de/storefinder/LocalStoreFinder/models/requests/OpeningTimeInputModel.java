@@ -13,8 +13,8 @@ public class OpeningTimeInputModel {
     private boolean isOpen;
 
     @JsonFormat(pattern = "HH:mm")
-    private LocalTime openingTime;
+    private String openingTime;
 
     @JsonFormat(pattern = "HH:mm")
-    private LocalTime closingTime;
+    private String closingTime;
 }

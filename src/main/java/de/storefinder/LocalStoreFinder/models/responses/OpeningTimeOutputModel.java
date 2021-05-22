@@ -24,8 +24,8 @@ public final class OpeningTimeOutputModel {
 
 
     @JsonFormat(pattern = "HH:mm")
-    private final LocalTime openingTime;
+    private final String openingTime;
 
     @JsonFormat(pattern = "HH:mm")
-    private final LocalTime closingTime;
+    private final String closingTime;
 }
