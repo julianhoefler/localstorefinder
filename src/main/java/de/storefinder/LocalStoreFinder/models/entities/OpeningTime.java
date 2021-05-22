@@ -3,8 +3,10 @@ package de.storefinder.LocalStoreFinder.models.entities;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Data
@@ -21,11 +23,9 @@ public class OpeningTime {
 
     private boolean isOpen;
 
-    @Basic
-    @Temporal(TemporalType.TIME)
-    private Date openingTime;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime openingTime;
 
-    @Basic
-    @Temporal(TemporalType.TIME)
-    private Date closingTime;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime closingTime;
 }
