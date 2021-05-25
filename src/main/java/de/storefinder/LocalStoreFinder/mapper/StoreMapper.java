@@ -9,11 +9,13 @@ import de.storefinder.LocalStoreFinder.repositories.AddressRepository;
 import de.storefinder.LocalStoreFinder.repositories.OpeningTimeRepository;
 import de.storefinder.LocalStoreFinder.repositories.OpeningTimesRepository;
 import de.storefinder.LocalStoreFinder.repositories.PaymentRepository;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 
 import java.util.Optional;
 
 @Setter
+@AllArgsConstructor
 public class StoreMapper {
     private AddressRepository addressRepository;
     private PaymentRepository paymentRepository;
