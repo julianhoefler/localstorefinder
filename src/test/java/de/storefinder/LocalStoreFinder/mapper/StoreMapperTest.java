@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 
@@ -57,12 +58,11 @@ class StoreMapperTest {
     }
 
     @Test
-    void mapToResponse_shouldReturnExpectedOutputModel() {
+    void mapToResponse_shouldReturnExpectedStoreOutputModel() {
         Mockito.when(addressRepositoryMock.findById(any())).thenReturn(Optional.of(Address.builder().build()));
         Mockito.when(openingTimesRepositoryMock.findById(any())).thenReturn(Optional.of(OpeningTimes.builder().build()));
         Mockito.when(openingTimeRepositoryMock.findById(any())).thenReturn(Optional.of(OpeningTime.builder().build()));
         Mockito.when(paymentRepositoryMock.findById(any())).thenReturn(Optional.of(Payment.builder().build()));
-
         Store store = Store.builder()
                 .name(NAME)
                 .id(ID)
@@ -85,22 +85,69 @@ class StoreMapperTest {
 
         StoreOutputModel result = storeMapper.mapToResponse(store);
 
-        assertEquals(result, expected);
+        assertEquals(expected, result);
     }
 
     @Test
-    void setAddressRepository() {
+    void mapToResponse_shouldReturnNull_whenAddressIsNotPresent() {
+        Mockito.when(addressRepositoryMock.findById(any())).thenReturn(Optional.empty());
+        Mockito.when(openingTimesRepositoryMock.findById(any())).thenReturn(Optional.of(OpeningTimes.builder().build()));
+        Mockito.when(openingTimeRepositoryMock.findById(any())).thenReturn(Optional.of(OpeningTime.builder().build()));
+        Mockito.when(paymentRepositoryMock.findById(any())).thenReturn(Optional.of(Payment.builder().build()));
+        Store store = Store.builder()
+                .name(NAME)
+                .id(ID)
+                .preImage(PRE_IMAGE)
+                .openingTimes(OPENING_TIMES)
+                .payment(PAYMENT)
+                .description(DESCRIPTION)
+                .address(ADDRESS)
+                .build();
+
+        StoreOutputModel result = storeMapper.mapToResponse(store);
+
+        assertNull(result);
     }
 
     @Test
-    void setPaymentRepository() {
+    void mapToResponse_shouldReturnNull_whenOpeningTimesIsNotPresent() {
+        Mockito.when(openingTimesRepositoryMock.findById(any())).thenReturn(Optional.empty());
+        Mockito.when(addressRepositoryMock.findById(any())).thenReturn(Optional.of(Address.builder().build()));
+        Mockito.when(openingTimeRepositoryMock.findById(any())).thenReturn(Optional.of(OpeningTime.builder().build()));
+        Mockito.when(paymentRepositoryMock.findById(any())).thenReturn(Optional.of(Payment.builder().build()));
+        Store store = Store.builder()
+                .name(NAME)
+                .id(ID)
+                .preImage(PRE_IMAGE)
+                .openingTimes(OPENING_TIMES)
+                .payment(PAYMENT)
+                .description(DESCRIPTION)
+                .address(ADDRESS)
+                .build();
+
+        StoreOutputModel result = storeMapper.mapToResponse(store);
+
+        assertNull(result);
     }
 
     @Test
-    void setOpeningTimesRepository() {
-    }
+    void mapToResponse_shouldReturnNull_whenPaymentIsNotPresent() {
+        Mockito.when(paymentRepositoryMock.findById(any())).thenReturn(Optional.empty());
+        Mockito.when(addressRepositoryMock.findById(any())).thenReturn(Optional.of(Address.builder().build()));
+        Mockito.when(openingTimeRepositoryMock.findById(any())).thenReturn(Optional.of(OpeningTime.builder().build()));
+        Mockito.when(openingTimesRepositoryMock.findById(any())).thenReturn(Optional.of(OpeningTimes.builder().build()));
+        Store store = Store.builder()
+                .name(NAME)
+                .id(ID)
+                .preImage(PRE_IMAGE)
+                .openingTimes(OPENING_TIMES)
+                .payment(PAYMENT)
+                .description(DESCRIPTION)
+                .address(ADDRESS)
+                .build();
 
-    @Test
-    void setOpeningTimeRepository() {
+        StoreOutputModel result = storeMapper.mapToResponse(store);
+
+        assertNull(result);
     }
 }
