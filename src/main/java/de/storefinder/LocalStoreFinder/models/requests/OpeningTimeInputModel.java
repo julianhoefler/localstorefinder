@@ -1,15 +1,20 @@
 package de.storefinder.LocalStoreFinder.models.requests;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.sql.Timestamp;
+import java.time.LocalTime;
 
 @Data
 public class OpeningTimeInputModel {
 
     private boolean isOpen;
 
-    private Timestamp openingTime;
+    @JsonFormat(pattern = "HH:mm")
+    private String openingTime;
 
-    private Timestamp closingTime;
+    @JsonFormat(pattern = "HH:mm")
+    private String closingTime;
 }
