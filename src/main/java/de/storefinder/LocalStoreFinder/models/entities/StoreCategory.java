@@ -1,4 +1,4 @@
-package de.storefinder.LocalStoreFinder;
+package de.storefinder.LocalStoreFinder.models.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,17 +11,15 @@ import javax.persistence.Id;
 @Data
 @Builder
 @AllArgsConstructor
-public class Store {
+public class StoreCategory {
 
-    public Store() {
+    public StoreCategory() {
     }
 
     @Id
     private String id;
 
-    private int zip;
+    private String storeId;
 
-    private String name;
-
-    private String address;
+    private String categoryId;
 }
