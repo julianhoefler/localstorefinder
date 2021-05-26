@@ -126,10 +126,25 @@ public class StoreController {
         return new ResponseEntity<>(outputStores, HttpStatus.OK);
     }
 
-    @DeleteMapping("/stores")
+    @DeleteMapping("/stores/{uuid}")
     @ApiResponse(responseCode = "200", description = "Erstellt einen Store mit zufälliger UUID")
     @ApiResponse(responseCode = "400", description = "Die eingegebenen Parameter stimmen nicht")
-    public ResponseEntity deleteById(@RequestParam String uuid) {
+    public ResponseEntity<String> deleteById(@PathVariable String uuid) {
+        Optional<Store> store = storeRepository.findById(uuid);
+        Optional<OpeningTimes> openingTimes = openingTimesRepository.findById(store.get().getOpeningTimes());
+
+        openingTimeRepository.deleteById(openingTimes.get().getMonday());
+        openingTimeRepository.deleteById(openingTimes.get().getTuesday());
+        openingTimeRepository.deleteById(openingTimes.get().getWednesday());
+        openingTimeRepository.deleteById(openingTimes.get().getThursday());
+        openingTimeRepository.deleteById(openingTimes.get().getFriday());
+        openingTimeRepository.deleteById(openingTimes.get().getSaturday());
+        openingTimeRepository.deleteById(openingTimes.get().getSunday());
+
+        openingTimesRepository.deleteById(store.get().getOpeningTimes());
+        addressRepository.deleteById(store.get().getAddress());
+        paymentRepository.deleteById(store.get().getPayment());
+
         storeRepository.deleteById(uuid);
         return new ResponseEntity<>("Deleted store Successfully", HttpStatus.OK);
     }
