@@ -9,6 +9,8 @@ import de.storefinder.LocalStoreFinder.models.requests.PaymentInputModel;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
 public class StoreOutputModel {
@@ -26,4 +28,6 @@ public class StoreOutputModel {
     private OpeningTimesOutputModel openingTimes;
 
     private PaymentOutputModel payment;
+
+    private List<CategoryOutputModel> categories;
 }

@@ -4,10 +4,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import de.storefinder.LocalStoreFinder.mapper.StoreMapper;
-import de.storefinder.LocalStoreFinder.repositories.AddressRepository;
-import de.storefinder.LocalStoreFinder.repositories.OpeningTimeRepository;
-import de.storefinder.LocalStoreFinder.repositories.OpeningTimesRepository;
-import de.storefinder.LocalStoreFinder.repositories.PaymentRepository;
+import de.storefinder.LocalStoreFinder.repositories.*;
 import de.storefinder.LocalStoreFinder.services.StoreInputValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
@@ -33,6 +30,9 @@ public class SpringConfiguration {
     @Autowired
     OpeningTimesRepository openingTimesRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
         return builder -> {
@@ -55,6 +55,7 @@ public class SpringConfiguration {
         storeMapper.setPaymentRepository(paymentRepository);
         storeMapper.setOpeningTimeRepository(openingTimeRepository);
         storeMapper.setOpeningTimesRepository(openingTimesRepository);
+        storeMapper.setCategoryRepository(categoryRepository);
 
         return storeMapper;
     }
