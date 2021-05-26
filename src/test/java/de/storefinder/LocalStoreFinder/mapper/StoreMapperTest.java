@@ -2,14 +2,12 @@ package de.storefinder.LocalStoreFinder.mapper;
 
 import de.storefinder.LocalStoreFinder.models.entities.*;
 import de.storefinder.LocalStoreFinder.models.responses.*;
-import de.storefinder.LocalStoreFinder.repositories.AddressRepository;
-import de.storefinder.LocalStoreFinder.repositories.OpeningTimeRepository;
-import de.storefinder.LocalStoreFinder.repositories.OpeningTimesRepository;
-import de.storefinder.LocalStoreFinder.repositories.PaymentRepository;
+import de.storefinder.LocalStoreFinder.repositories.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,6 +23,7 @@ class StoreMapperTest {
     private final PaymentRepository paymentRepositoryMock = mock(PaymentRepository.class);
     private final OpeningTimesRepository openingTimesRepositoryMock = mock(OpeningTimesRepository.class);
     private final OpeningTimeRepository openingTimeRepositoryMock = mock(OpeningTimeRepository.class);
+    private final CategoryRepository categoryRepositoryMock = mock(CategoryRepository.class);
 
     private final String ID = "id";
     private final String NAME = "name";
@@ -54,7 +53,8 @@ class StoreMapperTest {
                 addressRepositoryMock,
                 paymentRepositoryMock,
                 openingTimesRepositoryMock,
-                openingTimeRepositoryMock);
+                openingTimeRepositoryMock,
+                categoryRepositoryMock);
     }
 
     @Test
@@ -71,6 +71,7 @@ class StoreMapperTest {
                 .payment(PAYMENT)
                 .description(DESCRIPTION)
                 .address(ADDRESS)
+                .categories(new ArrayList<>())
                 .build();
 
         StoreOutputModel expected = StoreOutputModel.builder()
@@ -81,6 +82,7 @@ class StoreMapperTest {
                 .preImage(PRE_IMAGE)
                 .address(ADDRESS_OBJECT)
                 .payment(PAYMENT_OBJECT)
+                .categories(new ArrayList<>())
                 .build();
 
         StoreOutputModel result = storeMapper.mapToResponse(store);
@@ -102,6 +104,7 @@ class StoreMapperTest {
                 .payment(PAYMENT)
                 .description(DESCRIPTION)
                 .address(ADDRESS)
+                .categories(new ArrayList<>())
                 .build();
 
         StoreOutputModel result = storeMapper.mapToResponse(store);
@@ -123,6 +126,7 @@ class StoreMapperTest {
                 .payment(PAYMENT)
                 .description(DESCRIPTION)
                 .address(ADDRESS)
+                .categories(new ArrayList<>())
                 .build();
 
         StoreOutputModel result = storeMapper.mapToResponse(store);
@@ -144,6 +148,7 @@ class StoreMapperTest {
                 .payment(PAYMENT)
                 .description(DESCRIPTION)
                 .address(ADDRESS)
+                .categories(new ArrayList<>())
                 .build();
 
         StoreOutputModel result = storeMapper.mapToResponse(store);
