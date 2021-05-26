@@ -1,9 +1,6 @@
 package de.storefinder.LocalStoreFinder.controller;
 
-import de.storefinder.LocalStoreFinder.mapper.AddressMapper;
-import de.storefinder.LocalStoreFinder.mapper.OpeningTimesMapper;
-import de.storefinder.LocalStoreFinder.mapper.PaymentMapper;
-import de.storefinder.LocalStoreFinder.mapper.StoreMapper;
+import de.storefinder.LocalStoreFinder.mapper.*;
 import de.storefinder.LocalStoreFinder.models.entities.*;
 import de.storefinder.LocalStoreFinder.models.requests.StoreInputModel;
 import de.storefinder.LocalStoreFinder.models.responses.StoreOutputModel;
@@ -17,12 +14,10 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -40,6 +35,9 @@ public class StoreController {
 
     @Autowired
     private OpeningTimesRepository openingTimesRepository;
+
+    @Autowired
+    private StoreCategoryRepository storeCategoryRepository;
 
     @Autowired
     OpeningTimeRepository openingTimeRepository;
@@ -67,6 +65,14 @@ public class StoreController {
             OpeningTimes openingTimes = OpeningTimesMapper.mapToEntity(storeInputModel.getOpeningTimes(), openingTimeRepository);
             openingTimesRepository.save(openingTimes);
 
+            ArrayList<StoreCategory> storeCategories = new ArrayList<>();
+
+            for (String storeCategoryId : storeInputModel.getCategories()) {
+                StoreCategory storeCategory = StoreCategoryMapper.mapToEntity(storeCategoryId, uuid);
+                storeCategories.add(storeCategory);
+                storeCategoryRepository.save(storeCategory);
+            }
+
             Store store = Store.builder()
                     .id(uuid)
                     .name(storeInputModel.getName())
@@ -75,6 +81,7 @@ public class StoreController {
                     .payment(payment.getId())
                     .openingTimes(openingTimes.getId())
                     .preImage(storeInputModel.getPreImage())
+                    .categories(storeCategories)
                     .build();
 
             storeRepository.save(store);
@@ -100,5 +107,27 @@ public class StoreController {
             }
         }
         return new ResponseEntity<>(outputStores, HttpStatus.OK);
+    }
+    @DeleteMapping("/stores/{uuid}")
+    @ApiResponse(responseCode = "200", description = "Erstellt einen Store mit zufälliger UUID")
+    @ApiResponse(responseCode = "400", description = "Die eingegebenen Parameter stimmen nicht")
+    public ResponseEntity<String> deleteById(@PathVariable String uuid) {
+        Optional<Store> store = storeRepository.findById(uuid);
+        Optional<OpeningTimes> openingTimes = openingTimesRepository.findById(store.get().getOpeningTimes());
+
+        openingTimeRepository.deleteById(openingTimes.get().getMonday());
+        openingTimeRepository.deleteById(openingTimes.get().getTuesday());
+        openingTimeRepository.deleteById(openingTimes.get().getWednesday());
+        openingTimeRepository.deleteById(openingTimes.get().getThursday());
+        openingTimeRepository.deleteById(openingTimes.get().getFriday());
+        openingTimeRepository.deleteById(openingTimes.get().getSaturday());
+        openingTimeRepository.deleteById(openingTimes.get().getSunday());
+
+        openingTimesRepository.deleteById(store.get().getOpeningTimes());
+        addressRepository.deleteById(store.get().getAddress());
+        paymentRepository.deleteById(store.get().getPayment());
+
+        storeRepository.deleteById(uuid);
+        return new ResponseEntity<>("Deleted store Successfully", HttpStatus.OK);
     }
 }
