@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -30,5 +30,8 @@ public class Store {
     private String openingTimes;
 
     private String payment;
+
+    @OneToMany(mappedBy = "storeId")
+    private List<StoreCategory> categories;
 
 }

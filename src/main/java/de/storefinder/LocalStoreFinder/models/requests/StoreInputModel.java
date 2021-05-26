@@ -2,6 +2,8 @@ package de.storefinder.LocalStoreFinder.models.requests;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+
 @Data
 public class StoreInputModel {
 
@@ -16,4 +18,6 @@ public class StoreInputModel {
     private OpeningTimesInputModel openingTimes;
 
     private PaymentInputModel payment;
+
+    private ArrayList<String> categories;
 }

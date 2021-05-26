@@ -1,9 +1,6 @@
 package de.storefinder.LocalStoreFinder.controller;
 
-import de.storefinder.LocalStoreFinder.mapper.AddressMapper;
-import de.storefinder.LocalStoreFinder.mapper.OpeningTimesMapper;
-import de.storefinder.LocalStoreFinder.mapper.PaymentMapper;
-import de.storefinder.LocalStoreFinder.mapper.StoreMapper;
+import de.storefinder.LocalStoreFinder.mapper.*;
 import de.storefinder.LocalStoreFinder.models.entities.*;
 import de.storefinder.LocalStoreFinder.models.requests.StoreInputModel;
 import de.storefinder.LocalStoreFinder.models.responses.StoreOutputModel;
@@ -38,6 +35,9 @@ public class StoreController {
     private OpeningTimesRepository openingTimesRepository;
 
     @Autowired
+    private StoreCategoryRepository storeCategoryRepository;
+
+    @Autowired
     OpeningTimeRepository openingTimeRepository;
 
     @Autowired
@@ -62,6 +62,14 @@ public class StoreController {
             OpeningTimes openingTimes = OpeningTimesMapper.mapToEntity(storeInputModel.getOpeningTimes(), openingTimeRepository);
             openingTimesRepository.save(openingTimes);
 
+            ArrayList<StoreCategory> storeCategories = new ArrayList<>();
+
+            for (String storeCategoryId : storeInputModel.getCategories()) {
+                StoreCategory storeCategory = StoreCategoryMapper.mapToEntity(storeCategoryId, uuid);
+                storeCategories.add(storeCategory);
+                storeCategoryRepository.save(storeCategory);
+            }
+
             Store store = Store.builder()
                     .id(uuid)
                     .name(storeInputModel.getName())
@@ -70,6 +78,7 @@ public class StoreController {
                     .payment(payment.getId())
                     .openingTimes(openingTimes.getId())
                     .preImage(storeInputModel.getPreImage())
+                    .categories(storeCategories)
                     .build();
 
             storeRepository.save(store);
