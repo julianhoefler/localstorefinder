@@ -1,13 +1,15 @@
 # BITTE LESEN: Backend für den localstorefinder
 
-Aktuelle Version: 1.0.0
+Updated am 26.05.21
+
+Aktuelle Version: 1.1.0
 
 Um die Backend-Abhängigkeiten zu verringern, stellen wir 3 Dockerimages bereit.
 
 1. Anwendung auschecken
 2. (falls nötig) Branch zu **master** wechseln
 3. Maven **clean install** durchführen
-4. folgenden Befehl unter dem Ordner/backend ausführen:
+4. folgenden Befehl im Ordner ausführen:
    ``docker-compose up --build``
 
 Danach wird eine vollständige Umgebung mit Datenbank, PhpMyAdmin und der Anwendung hochgefahren

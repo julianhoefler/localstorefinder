@@ -126,6 +126,7 @@ public class StoreController {
         openingTimesRepository.deleteById(store.get().getOpeningTimes());
         addressRepository.deleteById(store.get().getAddress());
         paymentRepository.deleteById(store.get().getPayment());
+        storeCategoryRepository.deleteAllByStoreId(uuid);
 
         storeRepository.deleteById(uuid);
         return new ResponseEntity<>("Deleted store Successfully", HttpStatus.OK);

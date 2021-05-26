@@ -13,4 +13,9 @@ public interface StoreCategoryRepository extends CrudRepository<StoreCategory, S
     @Transactional
     @Query("DELETE FROM StoreCategory WHERE categoryId = ?1")
     void deleteAllByCategoryId(String categoryID);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM StoreCategory WHERE storeId = ?1")
+    void deleteAllByStoreId(String storeID);
 }
