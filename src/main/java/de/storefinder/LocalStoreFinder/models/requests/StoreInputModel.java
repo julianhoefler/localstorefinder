@@ -1,8 +1,10 @@
 package de.storefinder.LocalStoreFinder.models.requests;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class StoreInputModel {
 
     private String name;

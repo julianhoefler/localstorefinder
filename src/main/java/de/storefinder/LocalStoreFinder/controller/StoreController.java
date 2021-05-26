@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 @RestController
+@Setter
 public class StoreController {
 
     @Autowired
@@ -47,6 +49,7 @@ public class StoreController {
 
     @Autowired
     StoreMapper storeMapper;
+
 
     @PutMapping("/stores")
     @ApiResponse(responseCode = "200", description = "Erstellt einen Store mit zufälliger UUID")
