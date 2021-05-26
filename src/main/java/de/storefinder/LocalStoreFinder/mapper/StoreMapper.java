@@ -4,6 +4,7 @@ import de.storefinder.LocalStoreFinder.models.entities.*;
 import de.storefinder.LocalStoreFinder.models.responses.CategoryOutputModel;
 import de.storefinder.LocalStoreFinder.models.responses.StoreOutputModel;
 import de.storefinder.LocalStoreFinder.repositories.*;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Setter
+@AllArgsConstructor
 public class StoreMapper {
     private AddressRepository addressRepository;
     private PaymentRepository paymentRepository;

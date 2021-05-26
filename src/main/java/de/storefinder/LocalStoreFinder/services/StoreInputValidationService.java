@@ -15,7 +15,8 @@ public class StoreInputValidationService {
     }
 
     private boolean validateAddress(AddressInputModel addressInputModel) {
-        return addressInputModel.getCity() != null
+        return addressInputModel != null
+                && addressInputModel.getCity() != null
                 && addressInputModel.getStreet() != null
                 && addressInputModel.getZip() != null
                 && addressInputModel.getNumber() > 0;

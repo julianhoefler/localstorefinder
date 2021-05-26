@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import java.time.format.DateTimeFormatter;
 
 @Configuration
@@ -50,13 +51,11 @@ public class SpringConfiguration {
 
     @Bean
     public StoreMapper storeMapper() {
-        StoreMapper storeMapper = new StoreMapper();
-        storeMapper.setAddressRepository(addressRepository);
-        storeMapper.setPaymentRepository(paymentRepository);
-        storeMapper.setOpeningTimeRepository(openingTimeRepository);
-        storeMapper.setOpeningTimesRepository(openingTimesRepository);
-        storeMapper.setCategoryRepository(categoryRepository);
-
-        return storeMapper;
+        return new StoreMapper(
+                addressRepository,
+                paymentRepository,
+                openingTimesRepository,
+                openingTimeRepository,
+                categoryRepository);
     }
 }
