@@ -3,6 +3,7 @@ package de.storefinder.LocalStoreFinder.controller;
 import de.storefinder.LocalStoreFinder.mapper.*;
 import de.storefinder.LocalStoreFinder.models.entities.*;
 import de.storefinder.LocalStoreFinder.models.requests.StoreInputModel;
+import de.storefinder.LocalStoreFinder.models.responses.PutOutputModel;
 import de.storefinder.LocalStoreFinder.models.responses.StoreOutputModel;
 import de.storefinder.LocalStoreFinder.repositories.*;
 import de.storefinder.LocalStoreFinder.services.StoreInputValidationService;
@@ -48,11 +49,10 @@ public class StoreController {
     @Autowired
     StoreMapper storeMapper;
 
-
     @PutMapping("/stores")
     @ApiResponse(responseCode = "200", description = "Erstellt einen Store mit zufälliger UUID")
     @ApiResponse(responseCode = "400", description = "Die eingegebenen Parameter stimmen nicht")
-    public ResponseEntity<String> createStore(@RequestBody StoreInputModel storeInputModel) {
+    public ResponseEntity createStore(@RequestBody StoreInputModel storeInputModel) {
         if (storeInputValidationService.validate(storeInputModel)) {
             String uuid = UUID.randomUUID().toString();
 
@@ -85,9 +85,17 @@ public class StoreController {
                     .build();
 
             storeRepository.save(store);
-            return new ResponseEntity<>("Successfully added to database.", HttpStatus.OK);
+
+            PutOutputModel<String> response = PutOutputModel.<String>builder()
+                    .id(store.getId())
+                    .message("Store successfully added")
+                    .build();
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Request Data not correct", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(PutOutputModel.builder()
+                .message("Request Data not correct")
+                .build(),
+                HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/stores")
@@ -108,6 +116,18 @@ public class StoreController {
         }
         return new ResponseEntity<>(outputStores, HttpStatus.OK);
     }
+
+    @GetMapping("/stores/{uuid}")
+    @ApiResponse(responseCode = "200", description = "Erstellt einen Store mit zufälliger UUID")
+    @ApiResponse(responseCode = "400", description = "Die eingegebenen Parameter stimmen nicht")
+    public ResponseEntity<?> getStoreByUuid(@PathVariable String uuid) {
+        Optional<Store> store = storeRepository.findById(uuid);
+
+        StoreOutputModel storeOutputModel = storeMapper.mapToResponse(store.get());
+
+        return new ResponseEntity<>(storeOutputModel, HttpStatus.OK);
+    }
+
     @DeleteMapping("/stores/{uuid}")
     @ApiResponse(responseCode = "200", description = "Erstellt einen Store mit zufälliger UUID")
     @ApiResponse(responseCode = "400", description = "Die eingegebenen Parameter stimmen nicht")
