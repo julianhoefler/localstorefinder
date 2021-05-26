@@ -2,6 +2,7 @@ package de.storefinder.LocalStoreFinder.mapper;
 
 import de.storefinder.LocalStoreFinder.models.entities.Payment;
 import de.storefinder.LocalStoreFinder.models.requests.PaymentInputModel;
+import de.storefinder.LocalStoreFinder.models.responses.PaymentOutputModel;
 
 import java.util.UUID;
 
@@ -15,6 +16,14 @@ public class PaymentMapper {
                 .cash(paymentInputModel.isCash())
                 .creditcard(paymentInputModel.isCreditcard())
                 .payback(paymentInputModel.isPayback())
+                .build();
+    }
+
+    public static PaymentOutputModel mapToResponse(Payment paymentEntity) {
+        return PaymentOutputModel.builder()
+                .cash(paymentEntity.isCash())
+                .creditcard(paymentEntity.isCreditcard())
+                .payback(paymentEntity.isPayback())
                 .build();
     }
 }

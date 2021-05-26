@@ -17,7 +17,7 @@ public class StoreOutputModel {
 
     private String name;
 
-    private Address address;
+    private AddressOutputModel address;
 
     private String preImage;
 
@@ -25,5 +25,5 @@ public class StoreOutputModel {
 
     private OpeningTimesOutputModel openingTimes;
 
-    private Payment payment;
+    private PaymentOutputModel payment;
 }
