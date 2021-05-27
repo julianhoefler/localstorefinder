@@ -52,7 +52,7 @@ public class StoreController {
     @PutMapping("/stores")
     @ApiResponse(responseCode = "200", description = "Erstellt einen Store mit zufälliger UUID")
     @ApiResponse(responseCode = "400", description = "Die eingegebenen Parameter stimmen nicht")
-    public ResponseEntity createStore(@RequestBody StoreInputModel storeInputModel) {
+    public ResponseEntity<PutOutputModel<String>> createStore(@RequestBody StoreInputModel storeInputModel) {
         if (storeInputValidationService.validate(storeInputModel)) {
             String uuid = UUID.randomUUID().toString();
 
@@ -92,7 +92,7 @@ public class StoreController {
                     .build();
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
-        return new ResponseEntity<>(PutOutputModel.builder()
+        return new ResponseEntity(PutOutputModel.<String>builder()
                 .message("Request Data not correct")
                 .build(),
                 HttpStatus.BAD_REQUEST);
@@ -123,14 +123,17 @@ public class StoreController {
     public ResponseEntity<?> getStoreByUuid(@PathVariable String uuid) {
         Optional<Store> store = storeRepository.findById(uuid);
 
-        StoreOutputModel storeOutputModel = storeMapper.mapToResponse(store.get());
-
-        return new ResponseEntity<>(storeOutputModel, HttpStatus.OK);
+        if (store.isPresent()) {
+            StoreOutputModel storeOutputModel = storeMapper.mapToResponse(store.get());
+            return new ResponseEntity<>(storeOutputModel, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Something went wrong! Try it again later", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/stores/{uuid}")
     @ApiResponse(responseCode = "200", description = "Erstellt einen Store mit zufälliger UUID")
-    @ApiResponse(responseCode = "400", description = "Die eingegebenen Parameter stimmen nicht")
+    @ApiResponse(responseCode = "404", description = "Die eingegebenen Parameter stimmen nicht")
     public ResponseEntity<String> deleteById(@PathVariable String uuid) {
         Optional<Store> store = storeRepository.findById(uuid);
         Optional<OpeningTimes> openingTimes = openingTimesRepository.findById(store.get().getOpeningTimes());
