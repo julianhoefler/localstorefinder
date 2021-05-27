@@ -1,11 +1,5 @@
 package de.storefinder.LocalStoreFinder.models.responses;
 
-import de.storefinder.LocalStoreFinder.models.entities.Address;
-import de.storefinder.LocalStoreFinder.models.entities.OpeningTimes;
-import de.storefinder.LocalStoreFinder.models.entities.Payment;
-import de.storefinder.LocalStoreFinder.models.requests.AddressInputModel;
-import de.storefinder.LocalStoreFinder.models.requests.OpeningTimesInputModel;
-import de.storefinder.LocalStoreFinder.models.requests.PaymentInputModel;
 import lombok.Builder;
 import lombok.Data;
 
@@ -28,6 +22,8 @@ public class StoreOutputModel {
     private OpeningTimesOutputModel openingTimes;
 
     private PaymentOutputModel payment;
+
+    private boolean isActive;
 
     private List<CategoryOutputModel> categories;
 }

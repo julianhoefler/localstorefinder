@@ -82,6 +82,7 @@ public class StoreController {
                     .openingTimes(openingTimes.getId())
                     .preImage(storeInputModel.getPreImage())
                     .categories(storeCategories)
+                    .isActive(storeInputModel.isActive())
                     .build();
 
             storeRepository.save(store);

@@ -53,6 +53,7 @@ public class StoreMapper {
                             OpeningTimesMapper.mapToResponse(openingTimes.get(), openingTimeRepository)
                     )
                     .categories(categoryOutputModels)
+                    .isActive(store.isActive())
                     .build();
         }
         return null;
