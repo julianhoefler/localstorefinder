@@ -1,6 +1,7 @@
 package de.storefinder.LocalStoreFinder.mapper;
 
 import de.storefinder.LocalStoreFinder.controller.StoreController;
+import de.storefinder.LocalStoreFinder.mapper.testfactories.EntityModelTestFactory;
 import de.storefinder.LocalStoreFinder.mapper.testfactories.InputModelTestFactory;
 import de.storefinder.LocalStoreFinder.models.requests.StoreInputModel;
 import de.storefinder.LocalStoreFinder.models.responses.PutOutputModel;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,8 @@ import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class StoreControllerTest {
@@ -39,6 +42,12 @@ public class StoreControllerTest {
     @Mock
     OpeningTimesRepository openingTimesRepository;
 
+    @Mock
+    StoreCategoryRepository storeCategoryRepository;
+
+    @Mock
+    StoreMapper storeMapper;
+
     @BeforeEach
     void setup() {
         storeController = new StoreController();
@@ -48,6 +57,8 @@ public class StoreControllerTest {
         storeController.setOpeningTimeRepository(openingTimeRepository);
         storeController.setOpeningTimesRepository(openingTimesRepository);
         storeController.setStoreInputValidationService(new StoreInputValidationService());
+        storeController.setStoreCategoryRepository(storeCategoryRepository);
+        storeController.setStoreMapper(storeMapper);
     }
 
     @Test
@@ -65,14 +76,11 @@ public class StoreControllerTest {
     @Test
     void createStore_ShouldReturn_OK_AndSaveInputInEntity_If_ValidationSucceed() {
         StoreInputModel mockStoreInputModel = InputModelTestFactory.getStoreInputModelValid();
+        Mockito.when(storeMapper.mapToEntity(any())).thenReturn(EntityModelTestFactory.getStore());
 
         ResponseEntity<PutOutputModel<String>> result = storeController.createStore(mockStoreInputModel);
 
-        verify(addressRepository).save(any());
-        verify(paymentRepository).save(any());
-        verify(openingTimeRepository, times(7)).save(any());
-        verify(openingTimesRepository).save(any());
-        verify(storeRepository).save(any());
+        verify(storeMapper).mapToEntity(any());
 
         assertThat(Objects.requireNonNull(result.getBody()).getMessage()).isEqualTo("Store successfully added");
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);

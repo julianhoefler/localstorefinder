@@ -31,6 +31,7 @@ public class EntityModelTestFactory {
                 .address("address")
                 .payment("payment")
                 .openingTimes("opening_Times")
+                .isActive(true)
                 .build();
     }
 
