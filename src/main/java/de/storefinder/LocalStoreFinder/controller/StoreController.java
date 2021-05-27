@@ -1,7 +1,8 @@
 package de.storefinder.LocalStoreFinder.controller;
 
-import de.storefinder.LocalStoreFinder.mapper.*;
-import de.storefinder.LocalStoreFinder.models.entities.*;
+import de.storefinder.LocalStoreFinder.mapper.StoreMapper;
+import de.storefinder.LocalStoreFinder.models.entities.OpeningTimes;
+import de.storefinder.LocalStoreFinder.models.entities.Store;
 import de.storefinder.LocalStoreFinder.models.requests.StoreInputModel;
 import de.storefinder.LocalStoreFinder.models.responses.PutOutputModel;
 import de.storefinder.LocalStoreFinder.models.responses.StoreOutputModel;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @Setter
@@ -54,36 +54,7 @@ public class StoreController {
     @ApiResponse(responseCode = "400", description = "Die eingegebenen Parameter stimmen nicht")
     public ResponseEntity<PutOutputModel<String>> createStore(@RequestBody StoreInputModel storeInputModel) {
         if (storeInputValidationService.validate(storeInputModel)) {
-            String uuid = UUID.randomUUID().toString();
-
-            Address address = AddressMapper.mapToEntity(storeInputModel.getAddress());
-            addressRepository.save(address);
-
-            Payment payment = PaymentMapper.mapToEntity(storeInputModel.getPayment());
-            paymentRepository.save(payment);
-
-            OpeningTimes openingTimes = OpeningTimesMapper.mapToEntity(storeInputModel.getOpeningTimes(), openingTimeRepository);
-            openingTimesRepository.save(openingTimes);
-
-            ArrayList<StoreCategory> storeCategories = new ArrayList<>();
-
-            for (String storeCategoryId : storeInputModel.getCategories()) {
-                StoreCategory storeCategory = StoreCategoryMapper.mapToEntity(storeCategoryId, uuid);
-                storeCategories.add(storeCategory);
-                storeCategoryRepository.save(storeCategory);
-            }
-
-            Store store = Store.builder()
-                    .id(uuid)
-                    .name(storeInputModel.getName())
-                    .address(address.getId())
-                    .description(storeInputModel.getDescription())
-                    .payment(payment.getId())
-                    .openingTimes(openingTimes.getId())
-                    .preImage(storeInputModel.getPreImage())
-                    .categories(storeCategories)
-                    .isActive(storeInputModel.isActive())
-                    .build();
+            Store store = storeMapper.mapToEntity(storeInputModel);
 
             storeRepository.save(store);
 
