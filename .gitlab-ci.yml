@@ -1,0 +1,22 @@
+image: docker:latest
+
+stages:
+  - build
+  - test
+
+maven_build:
+  image: maven:3-jdk-11
+  stage: build
+  script:
+    - echo "starting script..."
+    - mvn install -B
+  artifacts:
+    paths:
+      - target/*.jar
+
+
+unit_test:
+  image: maven:3-jdk-11
+  stage: test
+  script:
+    - mvn test
