@@ -1,6 +1,7 @@
 package de.storefinder.LocalStoreFinder.mapper;
 
 import de.storefinder.LocalStoreFinder.controller.StoreController;
+import de.storefinder.LocalStoreFinder.mapper.testfactories.InputModelTestFactory;
 import de.storefinder.LocalStoreFinder.models.requests.StoreInputModel;
 import de.storefinder.LocalStoreFinder.models.responses.PutOutputModel;
 import de.storefinder.LocalStoreFinder.repositories.*;
@@ -63,7 +64,7 @@ public class StoreControllerTest {
 
     @Test
     void createStore_ShouldReturn_OK_AndSaveInputInEntity_If_ValidationSucceed() {
-        StoreInputModel mockStoreInputModel = TestFactory.getTestStoreInputModelValid();
+        StoreInputModel mockStoreInputModel = InputModelTestFactory.getStoreInputModelValid();
 
         ResponseEntity<PutOutputModel<String>> result = storeController.createStore(mockStoreInputModel);
 
