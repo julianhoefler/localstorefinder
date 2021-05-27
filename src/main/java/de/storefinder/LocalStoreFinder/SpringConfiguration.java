@@ -34,6 +34,9 @@ public class SpringConfiguration {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    StoreCategoryRepository storeCategoryRepository;
+
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
         return builder -> {
@@ -56,6 +59,7 @@ public class SpringConfiguration {
                 paymentRepository,
                 openingTimesRepository,
                 openingTimeRepository,
-                categoryRepository);
+                categoryRepository,
+                storeCategoryRepository);
     }
 }

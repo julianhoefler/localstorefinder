@@ -28,6 +28,7 @@ class StoreMapperTest {
     private final OpeningTimesRepository openingTimesRepositoryMock = mock(OpeningTimesRepository.class);
     private final OpeningTimeRepository openingTimeRepositoryMock = mock(OpeningTimeRepository.class);
     private final CategoryRepository categoryRepositoryMock = mock(CategoryRepository.class);
+    private final StoreCategoryRepository storeCategoryRepositoryMock = mock(StoreCategoryRepository.class);
 
     private final String ID = "id";
     private final String NAME = "name";
@@ -49,7 +50,8 @@ class StoreMapperTest {
                 paymentRepositoryMock,
                 openingTimesRepositoryMock,
                 openingTimeRepositoryMock,
-                categoryRepositoryMock);
+                categoryRepositoryMock,
+                storeCategoryRepositoryMock);
     }
 
     @Test
