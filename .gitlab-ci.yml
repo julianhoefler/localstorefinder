@@ -9,7 +9,7 @@ maven_build:
   stage: build
   script:
     - echo "starting script..."
-    - mvn install -B
+    - mvn install -B -DskipTests
   artifacts:
     paths:
       - target/*.jar
