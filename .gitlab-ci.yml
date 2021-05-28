@@ -35,7 +35,3 @@ sonarcloud-check:
       - .sonar/cache
   script:
     - mvn verify sonar:sonar
-  only:
-    - merge_requests
-    - master
-    - develop
