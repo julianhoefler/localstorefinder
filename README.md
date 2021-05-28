@@ -1,8 +1,8 @@
 # BITTE LESEN: Backend für den localstorefinder
 
-Updated am 26.05.21
+Updated am 28.05.21
 
-Aktuelle Version: 1.1.0
+Aktuelle Version: 1.2.0
 
 Um die Backend-Abhängigkeiten zu verringern, stellen wir 3 Dockerimages bereit.
 
@@ -23,5 +23,5 @@ Die Logindaten sind:
 * User: root
 * Password: notSecureChangeMe
 
-Die Dokumentation der API und zum Testen der Schnittstellen müsst die Swagger-UI öffnen:
+Für die Dokumentation der API und zum Testen der Schnittstellen müsst ihr die Swagger-UI öffnen:
 http://localhost:8080/swagger-ui.html
