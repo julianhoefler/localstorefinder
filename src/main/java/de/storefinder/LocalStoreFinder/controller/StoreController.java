@@ -7,6 +7,7 @@ import de.storefinder.LocalStoreFinder.models.requests.StoreInputModel;
 import de.storefinder.LocalStoreFinder.models.responses.PutOutputModel;
 import de.storefinder.LocalStoreFinder.models.responses.StoreOutputModel;
 import de.storefinder.LocalStoreFinder.repositories.*;
+import de.storefinder.LocalStoreFinder.services.FilterService;
 import de.storefinder.LocalStoreFinder.services.StoreInputValidationService;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -49,6 +50,9 @@ public class StoreController {
     @Autowired
     StoreMapper storeMapper;
 
+    @Autowired
+    FilterService filterService;
+
     @PutMapping("/stores")
     @ApiResponse(responseCode = "200", description = "Erstellt einen Store mit zufälliger UUID")
     @ApiResponse(responseCode = "400", description = "Die eingegebenen Parameter stimmen nicht")
@@ -75,13 +79,19 @@ public class StoreController {
             content = @Content(array = @ArraySchema(schema = @Schema(implementation = StoreOutputModel.class))))
     @ApiResponse(responseCode = "500", description = "Die Daten im Backend sind nicht konsistent oder ein anderer Fehler ist aufgetreten",
             content = @Content(schema = @Schema(implementation = String.class, example = "Something went wrong! Try it again later")))
-    public ResponseEntity<?> getAllStores() {
+    public ResponseEntity<?> getAllStores(@RequestParam(required = false) String zip, @RequestParam(required = false) Integer umkreis) {
         ArrayList<StoreOutputModel> outputStores = new ArrayList<>();
         Iterable<Store> stores = storeRepository.findAll();
         for (Store store : stores) {
             StoreOutputModel storeOutputModel = storeMapper.mapToResponse(store);
             if (storeOutputModel != null) {
-                outputStores.add(storeOutputModel);
+                if (zip != null) {
+                    if (filterService.checkFilter(zip, umkreis, storeOutputModel)) {
+                        outputStores.add(storeOutputModel);
+                    }
+                } else {
+                    outputStores.add(storeOutputModel);
+                }
             } else {
                 return new ResponseEntity<>("Something went wrong! Try it again later", HttpStatus.INTERNAL_SERVER_ERROR);
             }

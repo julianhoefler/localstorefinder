@@ -9,25 +9,16 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-@Builder
 @AllArgsConstructor
-public class Address {
+@Builder
+public class ZipGeoData {
 
-    public Address() {
+    public ZipGeoData() {
     }
 
     @Id
-    private String id;
-
     private String zip;
 
-    private String city;
-
-    private String street;
-
-    private int number;
-
     private double lat;
-
     private double lng;
 }
