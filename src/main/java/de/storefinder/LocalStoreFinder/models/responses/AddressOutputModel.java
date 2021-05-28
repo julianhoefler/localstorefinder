@@ -13,4 +13,8 @@ public class AddressOutputModel {
     private String street;
 
     private int number;
+
+    private double lat;
+
+    private double lng;
 }

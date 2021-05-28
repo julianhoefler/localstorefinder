@@ -1,7 +1,11 @@
 package de.storefinder.LocalStoreFinder.mapper;
 
+import de.storefinder.LocalStoreFinder.mapper.testfactories.OutputModelTestFactory;
 import de.storefinder.LocalStoreFinder.models.entities.*;
-import de.storefinder.LocalStoreFinder.models.responses.*;
+import de.storefinder.LocalStoreFinder.models.responses.AddressOutputModel;
+import de.storefinder.LocalStoreFinder.models.responses.OpeningTimesOutputModel;
+import de.storefinder.LocalStoreFinder.models.responses.PaymentOutputModel;
+import de.storefinder.LocalStoreFinder.models.responses.StoreOutputModel;
 import de.storefinder.LocalStoreFinder.repositories.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +28,7 @@ class StoreMapperTest {
     private final OpeningTimesRepository openingTimesRepositoryMock = mock(OpeningTimesRepository.class);
     private final OpeningTimeRepository openingTimeRepositoryMock = mock(OpeningTimeRepository.class);
     private final CategoryRepository categoryRepositoryMock = mock(CategoryRepository.class);
+    private final StoreCategoryRepository storeCategoryRepositoryMock = mock(StoreCategoryRepository.class);
 
     private final String ID = "id";
     private final String NAME = "name";
@@ -36,16 +41,7 @@ class StoreMapperTest {
 
     private final AddressOutputModel ADDRESS_OBJECT = AddressOutputModel.builder().build();
     private final PaymentOutputModel PAYMENT_OBJECT = PaymentOutputModel.builder().build();
-    private final OpeningTimeOutputModel OPENING_TIME_OBJECT = OpeningTimeOutputModel.builder().build();
-    private final OpeningTimesOutputModel OPENING_TIMES_OBJECT = OpeningTimesOutputModel.builder()
-            .monday(OPENING_TIME_OBJECT)
-            .tuesday(OPENING_TIME_OBJECT)
-            .wednesday(OPENING_TIME_OBJECT)
-            .thursday(OPENING_TIME_OBJECT)
-            .friday(OPENING_TIME_OBJECT)
-            .saturday(OPENING_TIME_OBJECT)
-            .sunday(OPENING_TIME_OBJECT)
-            .build();
+    private final OpeningTimesOutputModel OPENING_TIMES_OBJECT = OutputModelTestFactory.getEmptyOpeningTimesOutputModel();
 
     @BeforeEach
     void setUp() {
@@ -54,7 +50,8 @@ class StoreMapperTest {
                 paymentRepositoryMock,
                 openingTimesRepositoryMock,
                 openingTimeRepositoryMock,
-                categoryRepositoryMock);
+                categoryRepositoryMock,
+                storeCategoryRepositoryMock);
     }
 
     @Test

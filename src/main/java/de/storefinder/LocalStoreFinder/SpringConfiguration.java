@@ -5,6 +5,8 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import de.storefinder.LocalStoreFinder.mapper.StoreMapper;
 import de.storefinder.LocalStoreFinder.repositories.*;
+import de.storefinder.LocalStoreFinder.services.FilterService;
+import de.storefinder.LocalStoreFinder.services.GeoDataApiService;
 import de.storefinder.LocalStoreFinder.services.StoreInputValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
@@ -34,6 +36,12 @@ public class SpringConfiguration {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    StoreCategoryRepository storeCategoryRepository;
+
+    @Autowired
+    ZipGeoDataRepository zipGeoDataRepository;
+
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
         return builder -> {
@@ -56,6 +64,15 @@ public class SpringConfiguration {
                 paymentRepository,
                 openingTimesRepository,
                 openingTimeRepository,
-                categoryRepository);
+                categoryRepository,
+                storeCategoryRepository);
+    }
+
+    @Bean
+    public FilterService filterService() {
+        return new FilterService(
+                zipGeoDataRepository,
+                new GeoDataApiService()
+        );
     }
 }

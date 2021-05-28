@@ -21,5 +21,7 @@ public class StoreInputModel {
 
     private PaymentInputModel payment;
 
+    private boolean isActive;
+
     private ArrayList<String> categories;
 }
