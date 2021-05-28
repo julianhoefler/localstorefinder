@@ -20,3 +20,16 @@ unit_test:
   stage: test
   script:
     - mvn test
+
+sonar-qube:
+  image: maven:3.6.3-jdk-11
+  stage: test
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - mvn verify sonar:sonar -Dsonar.qualitygate.wait=true
+  allow_failure: true
