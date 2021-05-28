@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import de.storefinder.LocalStoreFinder.mapper.StoreMapper;
 import de.storefinder.LocalStoreFinder.repositories.*;
 import de.storefinder.LocalStoreFinder.services.FilterService;
+import de.storefinder.LocalStoreFinder.services.GeoDataApiService;
 import de.storefinder.LocalStoreFinder.services.StoreInputValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
@@ -70,7 +71,8 @@ public class SpringConfiguration {
     @Bean
     public FilterService filterService() {
         return new FilterService(
-                zipGeoDataRepository
+                zipGeoDataRepository,
+                new GeoDataApiService()
         );
     }
 }

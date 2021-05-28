@@ -60,6 +60,8 @@ public class OutputModelTestFactory {
                 .number(0)
                 .street("street")
                 .zip("zip")
+                .lng(10.0)
+                .lat(12.0)
                 .build();
     }
 

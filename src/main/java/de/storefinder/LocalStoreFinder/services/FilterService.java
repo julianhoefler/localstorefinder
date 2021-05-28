@@ -14,6 +14,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class FilterService {
     private ZipGeoDataRepository zipGeoDataRepository;
+    private GeoDataApiService geoDataApiService;
 
     public boolean checkFilter(String zip, Integer umkreis, StoreOutputModel storeOutputModel) {
         GeoData zipGeodata = getZipGeoData(zip);
@@ -44,7 +45,7 @@ public class FilterService {
 
             return geoData;
         } else {
-            GeoData geodata = new GeoDataApiService().getGeoDataFromZip(zip);
+            GeoData geodata = geoDataApiService.getGeoDataFromZip(zip);
             ZipGeoData saveZipGeoData = ZipGeoData.builder()
                     .zip(zip)
                     .lat(geodata.getLat())

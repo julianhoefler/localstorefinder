@@ -52,4 +52,11 @@ public class EntityModelTestFactory {
         return storeCategoryArrayList;
     }
 
+    public static ZipGeoData getTestZipGeoData(double lat, double lng) {
+        return ZipGeoData.builder()
+                .zip("60323")
+                .lng(lng)
+                .lat(lat)
+                .build();
+    }
 }
