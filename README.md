@@ -1,6 +1,7 @@
 # BITTE LESEN: Backend für den localstorefinder
 
 von Florian Janietz und Julian Höfler
+
 Updated am 28.05.21, importiert aus GitLab am 17.12.21
 
 Aktuelle Version: 1.2.0
